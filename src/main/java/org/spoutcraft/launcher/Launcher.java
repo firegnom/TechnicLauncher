@@ -212,8 +212,12 @@ public class Launcher implements PackRefreshListener {
 				int index = 0;
 
 				InstalledPacks packs = Launcher.getInstalledPacks();
+				//IF 
+				InstalledPack p = new InstalledPack("pokemcwfpl",true);
+				packs.add(p);
+			/*	
 				try {
-					FullModpacks technic = RestObject.getRestObject(FullModpacks.class, SolderConstants.getFullSolderUrl(SolderConstants.TECHNIC));
+					FullModpacks technic = RestObject.getRestObject(FullModpacks.class, "http://firegnom.net/pub/mcwfpl/mods.json");
 					Solder solder = new Solder(SolderConstants.TECHNIC, technic.getMirrorUrl());
 					for (SolderPackInfo info : technic.getModpacks().values()) {
 						String name = info.getName();
@@ -238,7 +242,7 @@ public class Launcher implements PackRefreshListener {
 						if (!pack.isPlatform() && pack.getInfo() == null && pack.getName() != null)
 							pack.setLocalOnly();
 					}
-				}
+				}*/
 			}
 		};
 		startupTasks.add(thread);

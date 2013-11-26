@@ -166,7 +166,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			beta.setSelected(true);
 		}
 
-		JLabel memoryLabel = new JLabel("Memory: ");
+		JLabel memoryLabel = new JLabel("Pamiec: ");
 		memoryLabel.setFont(minecraft);
 		memoryLabel.setBounds(10, beta.getY() + beta.getHeight() + 10, 65, 20);
 		memoryLabel.setForeground(Color.WHITE);
@@ -201,21 +201,21 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		changeFolder.addActionListener(this);
 		changeFolder.setEnabled(!SpoutcraftLauncher.params.isPortable());
 
-		logs = new LiteButton("Logs");
+		logs = new LiteButton("Logi");
 		logs.setFont(minecraft.deriveFont(14F));
 		logs.setBounds(10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
 		logs.setForeground(Color.WHITE);
 		logs.setActionCommand(LOGS_ACTION);
 		logs.addActionListener(this);
 
-		LiteButton save = new LiteButton("Save");
+		LiteButton save = new LiteButton("Zapisz");
 		save.setFont(minecraft.deriveFont(14F));
 		save.setBounds(FRAME_WIDTH / 2 + 5, logs.getY() + logs.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
 		save.setActionCommand(SAVE_ACTION);
 		save.addActionListener(this);
 
 		consoleToggle = Settings.getShowConsole();
-		console = new LiteButton(consoleToggle ? "Hide Console" : "Show Console");
+		console = new LiteButton(consoleToggle ? "Ukryj konsole" : "Pokaz konsole");
 		console.setFont(minecraft.deriveFont(14F));
 		console.setBounds(10, logs.getY() + logs.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
 		console.setForeground(Color.WHITE);
@@ -226,19 +226,19 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 		Container contentPane = getContentPane();
-		contentPane.add(build);
-		contentPane.add(beta);
-		contentPane.add(stable);
-		contentPane.add(changeFolder);
-		contentPane.add(packLocation);
+		//contentPane.add(build);
+		//contentPane.add(beta);
+		//contentPane.add(stable);
+		//contentPane.add(changeFolder);
+		//contentPane.add(packLocation);
 		contentPane.add(logs);
 		contentPane.add(console);
 		contentPane.add(optionsQuit);
 		contentPane.add(title);
 		contentPane.add(memory);
 		contentPane.add(memoryLabel);
-		contentPane.add(onLaunch);
-		contentPane.add(onLaunchLabel);
+		//contentPane.add(onLaunch);
+		//contentPane.add(onLaunchLabel);
 		contentPane.add(save);
 		contentPane.add(background);
 

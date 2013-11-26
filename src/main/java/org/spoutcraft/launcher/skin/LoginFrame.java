@@ -115,12 +115,12 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		LauncherFrame.setIcon(platformImage, "platform_logo.png", 305, 56);
 		platformImage.setBounds(21, 21, 305, 56);
 
-		instructionText = new JLabel("Please login using your Minecraft account");
+		instructionText = new JLabel("Prosze sie zalogowac");
 		instructionText.setFont(smallFont);
 		instructionText.setBounds(28, 80, FRAME_WIDTH - 50, 30);
 		instructionText.setForeground(Color.white);
 
-		nameLabel = new JLabel("Username");
+		nameLabel = new JLabel("Uzytkownik");
 		nameLabel.setFont(largeFont);
 		nameLabel.setBounds(25, 110, FRAME_WIDTH - 60, 30);
 		nameLabel.setForeground(Color.white);
@@ -149,7 +149,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		name.setFont(largeFont);
 		name.addKeyListener(this);
 
-		passLabel = new JLabel("Password");
+		passLabel = new JLabel("Haslo");
 		passLabel.setFont(largeFont);
 		passLabel.setBounds(25, 175, FRAME_WIDTH - 60, 30);
 		passLabel.setForeground(Color.white);
@@ -164,7 +164,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		pass.setActionCommand(LOGIN_ACTION);
 
 		// "Remember this account"
-		rememberAccount = new JCheckBox("Remember this account", false);
+		rememberAccount = new JCheckBox("Zapamietaj to konto", false);
 		rememberAccount.setFont(smallFont);
 		rememberAccount.setForeground(Color.white);
 		rememberAccount.setOpaque(false);
@@ -177,7 +177,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		rememberAccount.addKeyListener(this);
 
 		//Login button
-		login = new BlueButton("LOGIN");
+		login = new BlueButton("Zaloguj");
 		login.setFont(veryLargeFont);
 		login.setBounds(25, 290, FRAME_WIDTH - 50, 40);
 		login.setActionCommand(LOGIN_ACTION);
@@ -222,10 +222,10 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		contentPane.add(rememberAccount);
 		contentPane.add(instructionText);
 		contentPane.add(nameLabel);
-		contentPane.add(passLabel);
+		//contentPane.add(passLabel);
 		contentPane.add(name);
 		contentPane.add(nameSelect);
-		contentPane.add(pass);
+		//contentPane.add(pass);
 		contentPane.add(platformImage);
 		contentPane.add(background);
 	}
@@ -347,6 +347,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 	 * Given the current UI state, attempt to log in to the minecraft auth service & activate the launcher frame.
 	 */
 	private void attemptLogin() {
+		System.out.println("jestem 1 : "+name.getText());
 		if (nameSelect.isVisible()) {
 			Object selected = nameSelect.getSelectedItem();
 
@@ -396,67 +397,15 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		User loginUser = user;
 		boolean rejected = false;
 
-		try {
-			if (!AuthenticationService.validate(loginUser)) {
+		loginUser = new User(user.getUsername());
+		Launcher.getUsers().addUser(loginUser);
 
-				if (notifyUserOfFailure)
-					JOptionPane.showMessageDialog(this, "Your login session has expired or become corrupt.", "Please Login Again", JOptionPane.WARNING_MESSAGE);
-
-				rejected = true;
-				loginUser = null;
-			} else {
-				RefreshResponse response = AuthenticationService.requestRefresh(loginUser);
-				if (response.getError() != null) {
-
-					if (notifyUserOfFailure)
-						JOptionPane.showMessageDialog(this, response.getErrorMessage(), response.getError(), JOptionPane.ERROR_MESSAGE);
-
-					rejected = true;
-					loginUser = null;
-				} else {
-					//Refresh user from response
-					loginUser = new User(user.getUsername(), response);
-					Launcher.getUsers().addUser(loginUser);
-				}
-			}
-		} catch (AuthenticationNetworkFailureException ex) {
-			ex.printStackTrace();
-
-			//Couldn't reach auth server- if we're running silently (we just started up and have a user session ready to roll)
-			//Go ahead and just play offline automatically, like the minecraft client does.  If we're running loud (user
-			//is actually at the login UI clicking the login button), give them a choice.
-			if (!notifyUserOfFailure || JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this,
-					"The auth servers at Minecraft.net are inaccessible.  Would you like to play offline?",
-					"Offline Play", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-
-				//This is the last time we'll have access to the user's real username, so we should set the last-used
-				//username now
-				Launcher.getUsers().setLastUser(user.getUsername());
-
-				//Create offline user
-				loginUser = new User(user.getDisplayName());
-			} else {
-				//Use clicked 'no', so just pull the ripcord and get back to the UI
-				loginUser = null;
-			}
-		}
-
-		if (loginUser == null) {
-			//If we actually failed to validate, we should remove the user from the list of saved users
-			//and refresh the user list
-			if (rejected) {
-				Launcher.getUsers().removeUser(user.getUsername());
-				Launcher.getUsers().save();
-				refreshUsers();
-				setCurrentUser(user.getUsername());
-			}
-
-			return false;
-		} else {
+		if (loginUser != null) {
 			//We have a cleared user, start the launcher up
 			startLauncher(loginUser);
 			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -468,7 +417,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 	private void attemptNewLogin(String username) {
 
 		AuthResponse response = null;
-		try {
+		/*try {
 			//Attempt the log the user in with the data from this form
 			response = AuthenticationService.requestLogin(username, new String(this.pass.getPassword()), Launcher.getUsers().getClientToken());
 
@@ -481,10 +430,10 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(this, "An error occurred while attempting to reach Minecraft.net", "Auth Servers Inaccessible", JOptionPane.ERROR_MESSAGE);
 			return;
-		}
+		}*/
 
 		//Create an online user with the received data
-		final User clearedUser = new User(username, response);
+		final User clearedUser = new User(username);
 
 		if (rememberAccount.isSelected()) {
 			//Add user to our list of cached users if checkbox is true

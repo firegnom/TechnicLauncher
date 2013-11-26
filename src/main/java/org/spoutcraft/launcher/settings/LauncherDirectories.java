@@ -45,7 +45,7 @@ public class LauncherDirectories extends Directories {
 
 	public File getSettingsDirectory() {
 		if (settingsDir == null) {
-			settingsDir = setupSettingsDir("technic");
+			settingsDir = setupSettingsDir("mcwfpl");
 		}
 		return settingsDir;
 	}

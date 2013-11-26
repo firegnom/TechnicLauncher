@@ -105,7 +105,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		packBackground = new BackgroundImage(this, FRAME_WIDTH, FRAME_HEIGHT);
 		this.addMouseListener(packBackground);
 		this.addMouseMotionListener(packBackground);
-		this.addMouseWheelListener(this);
+		//this.addMouseWheelListener(this);
 		getContentPane().add(packBackground);
 		this.setUndecorated(true);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -126,7 +126,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		RoundedBox launchArea = new RoundedBox(TRANSPARENT);
 		launchArea.setBounds(605, 375, 265, 50);
 
-		launch = new LiteButton("PLAY");
+		launch = new LiteButton("START");
 		launch.setFont(getMinecraftFont(20));
 		launch.setBounds(launchArea.getX()+5, launchArea.getY()+5, launchArea.getWidth()-10, launchArea.getHeight()-10);
 		launch.setActionCommand(LAUNCH_ACTION);
@@ -151,13 +151,13 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		loggedInMsg.setBounds(userArea.getX() + 5, userArea.getY() + 8, 185, 30);
 		loggedInMsg.setForeground(Color.white);
 
-		logout = new LiteButton("Log Out", new Color(0,0,0,0), new Color(0,0,0,0), new Color(0,0,0,0), Color.white, Color.white, Color.white);
+		logout = new LiteButton("Wyloguj", new Color(0,0,0,0), new Color(0,0,0,0), new Color(0,0,0,0), Color.white, Color.white, Color.white);
 		logout.setFont(minecraft);
 		logout.setOpaque(false);
 		logout.setHorizontalAlignment(SwingConstants.RIGHT);
 		logout.setHorizontalTextPosition(SwingConstants.RIGHT);
 		logout.setForeground(Color.white);
-		logout.setBounds(userArea.getX() + 133, userArea.getY() + 32, 60, 30);
+		logout.setBounds(userArea.getX() + 123, userArea.getY() + 32, 70, 30);
 		logout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		logout.setActionCommand(LOGOUT);
 		logout.addActionListener(this);
@@ -319,22 +319,22 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		contentPane.add(barBox);
 		contentPane.add(packUp);
 		contentPane.add(packDown);
-		contentPane.add(customName);
+		//contentPane.add(customName);
 		contentPane.add(packOptionsBtn);
-		contentPane.add(packRemoveBtn);
-		contentPane.add(platform);
+		//contentPane.add(packRemoveBtn);
+		//contentPane.add(platform);
 		contentPane.add(packSelector);
-		contentPane.add(selectorBackground);
-		contentPane.add(steam);
-		contentPane.add(twitter);
-		contentPane.add(facebook);
-		contentPane.add(youtube);
-		contentPane.add(browse);
-		contentPane.add(forums);
-		contentPane.add(donate);
-		contentPane.add(linkArea);
-		contentPane.add(logo);
-		contentPane.add(news);
+		//contentPane.add(selectorBackground);
+		//contentPane.add(steam);
+		//contentPane.add(twitter);
+		//contentPane.add(facebook);
+		//contentPane.add(youtube);
+		//contentPane.add(browse);
+		//contentPane.add(forums);
+		//contentPane.add(donate);
+		//contentPane.add(linkArea);
+		//contentPane.add(logo);
+		//contentPane.add(news);
 		contentPane.add(options);
 		contentPane.add(exit);
 	}
@@ -466,11 +466,11 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 	public void lockLoginButton(boolean unlock) {
 		if (unlock) {
 			if (currentUser != null && currentUser.isOffline())
-				launch.setText("PLAY OFFLINE");
+				launch.setText("START");
 			else
-				launch.setText("PLAY");
+				launch.setText("START");
 		} else {
-			launch.setText("LAUNCHING...");
+			launch.setText("Uruchamianie ...");
 		}
 		launch.setEnabled(unlock);
 		packRemoveBtn.setEnabled(unlock);
@@ -501,9 +501,9 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 			return;
 
 		if (currentUser.isOffline())
-			launch.setText("PLAY OFFLINE");
+			launch.setText("START");
 		else
-			launch.setText("PLAY");
+			launch.setText("START");
 
 		loggedInMsg.setText(currentUser.getDisplayName());
 
